@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Boyfriend's Day! ❤️</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #1a1e24;
+      font-family: 'Georgia', serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Container for the background room image */
+    .room-container {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .room-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Invisible Clickable Hotspots */
+    .hotspot {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.0);
+      border: 2px dashed rgba(255, 223, 150, 0.5);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .hotspot:hover {
+      background: rgba(255, 223, 150, 0.25);
+      box-shadow: 0 0 15px rgba(255, 230, 150, 0.6);
+      transform: scale(1.03);
+    }
+
+    /* Hotspot positions on top of room elements */
+    #spot-computer { top: 34%; left: 30%; width: 20%; height: 26%; }
+    #spot-wall-notes { top: 22%; left: 15%; width: 14%; height: 28%; }
+    #spot-mug { top: 54%; left: 52%; width: 6%; height: 9%; }
+    #spot-cat { top: 45%; left: 52%; width: 6%; height: 10%; }
+    #spot-books { top: 52%; left: 76%; width: 12%; height: 16%; }
+
+    /* Pop-up Overlay (Modal) */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Popup Box Style */
+    .modal-card {
+      background: #fffdf6;
+      border: 3px solid #d4a373;
+      padding: 30px;
+      border-radius: 16px;
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+      color: #4a3e3d;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-card img {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .modal-card h2 {
+      margin-bottom: 12px;
+      color: #9c6644;
+      font-size: 1.6rem;
+    }
+
+    .modal-card p {
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #9c6644;
+    }
+
+    /* Top Banner Text */
+    .hint-banner {
+      position: absolute;
+      top: 15px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 1.1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="room-container">
+    <div class="hint-banner">✨ Explore the room! Click on items to open hidden memories... ✨</div>
+    
+    <!-- Room Background -->
+    <img src="room.jpg" alt="Cozy Room" class="room-bg">
+
+    <!-- Clickable Items (Hotspots) -->
+    <div class="hotspot" id="spot-computer" onclick="openModal('computer')"></div>
+    <div class="hotspot" id="spot-wall-notes" onclick="openModal('notes')"></div>
+    <div class="hotspot" id="spot-mug" onclick="openModal('mug')"></div>
+    <div class="hotspot" id="spot-cat" onclick="openModal('cat')"></div>
+    <div class="hotspot" id="spot-books" onclick="openModal('books')"></div>
+  </div>
+
+  <!-- Popup Window -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-card">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // Pop-up details
+    const contents = {
+      computer: `
+        <h2>Our Main Story 💻</h2>
+        <img src="photo1.jpg" alt="Memory Photo" />
+        <p>Happy National Boyfriend's Day! Thank you for being my favorite person to talk to every single day.</p>
+      `,
+      notes: `
+        <h2>Reasons I Love You 📝</h2>
+        <p>1. Your incredible smile.<br>
+           2. How cute you are when you're focused.<br>
+           3. The way you always make me laugh!</p>
+      `,
+      mug: `
+        <h2>Coffee & Cozy Dates ☕</h2>
+        <p>Here's to many more coffee dates, late-night talks, and cozy moments together!</p>
+      `,
+      cat: `
+        <h2>Virtual Hugs 🐱</h2>
+        <img src="photo2.jpg" alt="Cute Memory" />
+        <p>Sending you the biggest hug right now!</p>
+      `,
+      books: `
+        <h2>Our Next Chapters 📚</h2>
+        <p>I can't wait to build even more amazing memories with you this year.</p>
+      `
+    };
+
+    function openModal(key) {
+      const modalOverlay = document.getElementById('modalOverlay');
+      const modalContent = document.getElementById('modalContent');
+      
+      modalContent.innerHTML = contents[key];
+      modalOverlay.classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
