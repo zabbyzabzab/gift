@@ -62,7 +62,7 @@
 
     /* Hotspot positions */
     #spot-poster { top: 20%; left: 2%; width: 11%; height: 27%; }
-    #spot-letter { top: 40%; left: 39%; width: 15%; height: 18%; }
+    #spot-letter { top: 40%; left: 39%; width: 14%; height: 16%; }
     #spot-book   { top: 72%; left: 6%;  width: 11%; height: 21%; }
     #spot-photo  { top: 76%; left: 85%; width: 8%;  height: 17%; }
 
@@ -256,11 +256,11 @@
       const modalCard = document.getElementById('modalCard');
       const modalContent = document.getElementById('modalContent');
       
-      // Apply special stationary style if clicking the letter
-      if (key === 'letter') {
-        modalCard.classList.add('letter-style');
+      // Apply special stationary style if clicking the 
+      if (key === '') {
+        modalCard.classList.add('-style');
       } else {
-        modalCard.classList.remove('letter-style');
+        modalCard.classList.remove('-style');
       }
 
       modalContent.innerHTML = contents[key];
