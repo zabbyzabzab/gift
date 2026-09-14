@@ -38,13 +38,16 @@
       max-width: none;
       border-radius: 0;
       box-shadow: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       overflow: hidden;
     }
 
     .room-bg {
       width: 100%;
       height: 100%;
-      object-fit: cover; /* Stretches and fills the screen smoothly */
+      object-fit: contain; /* Fits the entire image without cropping any edges */
       display: block;
     }
 
