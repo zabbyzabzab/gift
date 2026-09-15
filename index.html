@@ -78,9 +78,9 @@
       top: 15px;
       right: 15px;
       z-index: 20;
-      background: #ffb6c1;
+      background: #efb3b5;
       color: #5a2a3a;
-      border: 3px solid #f48fb1;
+      border: 3px solid #e37e99;
       padding: 6px 14px;
       font-family: 'VT323', monospace;
       font-size: 1.5rem;
@@ -94,14 +94,14 @@
     }
 
     .music-btn:hover {
-      background: #ffc1e3;
+      background: #efb3b5;
       transform: translateY(-2px);
-      box-shadow: 0 6px 0 #d81b60;
+      box-shadow: 0 6px 0 #c26780;
     }
 
     .music-btn:active {
       transform: translateY(2px);
-      box-shadow: 0 2px 0 #d81b60;
+      box-shadow: 0 2px 0 #e57b98;
     }
 
     /* Invisible Clickable Hotspots */
@@ -290,7 +290,7 @@
     function toggleMusic() {
       if (isPlaying) {
         audio.pause();
-        musicBtn.innerHTML = '♫ Play Music';
+        Btn.innerHTML = '♫ Play Music';
       } else {
         audio.play();
         musicBtn.innerHTML = '❚❚ Pause Music';
