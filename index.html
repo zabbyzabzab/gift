@@ -31,6 +31,64 @@
       overflow: hidden;
     }
 
+    /* "Do You Love Me?" Intro Screen Overlay */
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #12101d;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+      color: #fce4ec;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .intro-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .question-title {
+      font-size: 3.5rem;
+      color: #ffb6c1;
+      text-shadow: 0 4px 10px rgba(239, 130, 160, 0.4);
+      margin-bottom: 40px;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .love-btn {
+      background: #efb3b5;
+      color: #5a2a3a;
+      border: 3px solid #e37e99;
+      padding: 10px 28px;
+      font-family: 'VT323', monospace;
+      font-size: 2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #ef92ad;
+      transition: all 0.2s ease;
+    }
+
+    .love-btn:hover {
+      background: #ffcbe1;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #c26780;
+    }
+
     .room-container {
       position: relative;
       width: 100vw;
@@ -104,27 +162,44 @@
       box-shadow: 0 2px 0 #e57b98;
     }
 
-    /* Invisible Clickable Hotspots */
+    /* Glowing / Pulsing Hotspots */
     .hotspot {
       position: absolute;
-      background: rgba(255, 255, 255, 0.0);
-      border: 2px dashed rgba(255, 182, 193, 0.6);
+      background: rgba(255, 182, 193, 0.15);
+      border: 2px dashed rgba(255, 182, 193, 0.8);
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.3s ease;
+      animation: pulseGlow 2.5s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 0 5px rgba(255, 182, 193, 0.4);
+        border-color: rgba(255, 182, 193, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 18px rgba(255, 182, 193, 0.9);
+        border-color: rgba(255, 220, 230, 1);
+        background: rgba(255, 192, 203, 0.25);
+      }
+      100% {
+        box-shadow: 0 0 5px rgba(255, 182, 193, 0.4);
+        border-color: rgba(255, 182, 193, 0.5);
+      }
     }
 
     .hotspot:hover {
-      background: rgba(255, 192, 203, 0.3);
-      box-shadow: 0 0 15px rgba(255, 182, 193, 0.8);
-      transform: scale(1.03);
+      background: rgba(255, 192, 203, 0.45);
+      box-shadow: 0 0 22px rgba(255, 182, 193, 1);
+      transform: scale(1.04);
     }
 
     /* Hotspot positions */
     #spot-poster { top: 21%; left: 2%; width: 11%; height: 26%; }
     #spot-letter { top: 42%; left: 39.5%; width: 13%; height: 13.5%; }
     #spot-book   { top: 72%; left: 6%;  width: 11%; height: 20%; }
-    #spot-photo  { top: 75%; left: 85%; width: 8%;  height: 15%; }
+    #spot-photo  { top: 78%; left: 85%; width: 8%;  height: 15%; } /* Adjusted slightly down */
 
     /* Pop-up Overlay (Modal) */
     .modal-overlay {
@@ -254,6 +329,15 @@
 </head>
 <body>
 
+  <!-- "Do You Love Me?" Intro Screen -->
+  <div class="intro-overlay" id="introOverlay">
+    <div class="question-title">Do you love me, Okashah? ❤️</div>
+    <div class="btn-container">
+      <button class="love-btn" onclick="startExperience()">YES! 💕</button>
+      <button class="love-btn" id="noBtn" onmouseover="turnToYes()" onclick="startExperience()">NO 😜</button>
+    </div>
+  </div>
+
   <!-- Audio Element -->
   <audio id="bgm" loop src="bgm.mp3"></audio>
 
@@ -286,6 +370,25 @@
     const audio = document.getElementById('bgm');
     const musicBtn = document.getElementById('musicBtn');
     let isPlaying = false;
+
+    // Changes NO button into YES when hovered
+    function turnToYes() {
+      const noBtn = document.getElementById('noBtn');
+      noBtn.innerHTML = 'YES! 💕';
+      noBtn.style.background = '#ffcbe1';
+    }
+
+    function startExperience() {
+      document.getElementById('introOverlay').classList.add('hidden');
+      
+      // Auto-play background music upon entering
+      audio.play().then(() => {
+        isPlaying = true;
+        musicBtn.innerHTML = '❚❚ Pause Music';
+      }).catch(err => {
+        console.log("Audio play prevented:", err);
+      });
+    }
 
     function toggleMusic() {
       if (isPlaying) {
