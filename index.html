@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>I love you Okashah <3</title>
+  <title>I love you Okashah &lt;3</title>
 
   <!-- Google Fonts import -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  
   <style>
     * {
       box-sizing: border-box;
@@ -30,7 +31,6 @@
       overflow: hidden;
     }
 
-    
     .room-container {
       position: relative;
       width: 100vw;
@@ -40,6 +40,7 @@
       align-items: center;
       overflow: hidden;
     }
+
     .image-wrapper {
       position: relative;
       width: 100%;
@@ -50,24 +51,58 @@
       display: flex;
       justify-content: center;
       align-items: center;
-  }
-  .room-bg {
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    display: block;
-  }
+    }
+
+    .room-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      display: block;
+    }
+
     .hint-banner {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 6rem; 
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-  pointer-events: none;
-  z-index: 10;
-}
+      position: absolute;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 6rem; 
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Pink Pixel Music Player Button */
+    .music-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      z-index: 20;
+      background: #ffb6c1;
+      color: #5a2a3a;
+      border: 3px solid #f48fb1;
+      padding: 6px 14px;
+      font-family: 'VT323', monospace;
+      font-size: 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #d81b60;
+      transition: all 0.1s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .music-btn:hover {
+      background: #ffc1e3;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #d81b60;
+    }
+
+    .music-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 #d81b60;
+    }
 
     /* Invisible Clickable Hotspots */
     .hotspot {
@@ -189,12 +224,20 @@
     .modal-card h2 {
       margin-bottom: 12px;
       color: #b25d7e;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
     }
 
     .modal-card p {
       line-height: 1.6;
       font-size: 1.5rem;
+    }
+
+    .reasons-list {
+      font-size: 1.5rem;
+      text-align: left;
+      padding-left: 20px;
+      line-height: 1.6;
+      margin-bottom: 15px;
     }
 
     .close-btn {
@@ -211,16 +254,24 @@
 </head>
 <body>
 
- <div class="room-container">
-  <div class="image-wrapper">
-    <div class="hint-banner">Happy Boyfriend's Day, Okashah!</div>
-    <img src="room.jpg" alt="Cozy Pixel Room" class="room-bg">
+  <!-- Audio Element -->
+  <audio id="bgm" loop src="bgm.mp3"></audio>
 
-    <!-- Clickable Items (Hotspots) -->
-    <div class="hotspot" id="spot-poster" onclick="openModal('poster')"></div>
-    <div class="hotspot" id="spot-letter" onclick="openModal('letter')"></div>
-    <div class="hotspot" id="spot-book"   onclick="openModal('book')"></div>
-    <div class="hotspot" id="spot-photo"  onclick="openModal('photo')"></div>
+  <div class="room-container">
+    <div class="image-wrapper">
+      <div class="hint-banner">Happy Boyfriend's Day, Okashah!</div>
+
+      <!-- Pink Pixel Music Button -->
+      <button class="music-btn" id="musicBtn" onclick="toggleMusic()">♫ Play Music</button>
+
+      <img src="room.jpg" alt="Cozy Pixel Room" class="room-bg">
+
+      <!-- Clickable Items (Hotspots) -->
+      <div class="hotspot" id="spot-poster" onclick="openModal('poster')"></div>
+      <div class="hotspot" id="spot-letter" onclick="openModal('letter')"></div>
+      <div class="hotspot" id="spot-book"   onclick="openModal('book')"></div>
+      <div class="hotspot" id="spot-photo"  onclick="openModal('photo')"></div>
+    </div>
   </div>
 
   <!-- Popup Window -->
@@ -232,6 +283,21 @@
   </div>
 
   <script>
+    const audio = document.getElementById('bgm');
+    const musicBtn = document.getElementById('musicBtn');
+    let isPlaying = false;
+
+    function toggleMusic() {
+      if (isPlaying) {
+        audio.pause();
+        musicBtn.innerHTML = '♫ Play Music';
+      } else {
+        audio.play();
+        musicBtn.innerHTML = '❚❚ Pause Music';
+      }
+      isPlaying = !isPlaying;
+    }
+
     const contents = {
       letter: `
         <span class="heart-icon">💌</span>
@@ -242,31 +308,30 @@
           <p>I don't think I'll ever be able to fully explain my love for you, but I want to try. There are so many things I wish I could say to you, in the moments between our calls, or when I wish I could reach through the screen and hold your hand or hug you tight. So, for now, I'm putting some of those feelings into words, hoping that you feel even a little bit of the love I have for you. </p>
           <p>If I could give you one thing to carry with you everywhere, it would be the certainty that you are loved. Not just on the days when everything feels easy, and not just when we're talking for hours, but on the quiet days, the difficult days, and the days when you need a little extra warmth. I hope you know how much you have changed my days, even in ways you probably don't realize.</p>
           <p>You have this way of making ordinary moments feel special, and somehow, even with all the distance between us, you have become the closest person to my heart. One of my favorite things about us is how safe and understood you make me feel. I never want you to think that you have to be perfect around me or that you have to have everything figured out. You can have good days, bad days, and days when you don't really know what you're feeling. None of those things make you any less deserving of love. I hope you always feel like you can be yourself with me, because the person you are is who I care about so deeply.</p>
-          <p>I love the little things about you, too. The way you make me laugh, the way you goof off, and the way you can make me smile just by being you. I love our random moments, our jokes, our calls, and even the simple parts of our days that we get to share. Those are the things that remind me how lucky I am to have you in my life. </p>
+          <p>I love the little things about you, too. The way you make me laugh, the way you goof off, and the way you can make me smile just by being you. I love our random moments, our jokes, our calls, and even the simple parts of our days that we get to share. Those are the things that remind me how lucky I am to have you in my life. Not just as my boyfriend but as my best friend too.</p>
           <p>I know the distance isn't always easy, and I wish more than anything that I could be there beside you. I wish I could give you hugs, sit next to you, and spend time together without having to say goodbye at the end of a call. But even though I can't do all of those things right now, I hope you never doubt that my love and care for you are real. You matter to me in ways that distance can't change. I'm so glad I have you, even though you live across the world.</p>
           <p>You're so kind, caring, goofy, dumb, adorable, loving, unhinged, handsome, and perfect for me in every way. I love how you match my energy, support me during my rough days, and are always such an amazing bundle of joy. I'm so proud to be your girlfriend, and you're genuinely the most amazing boy. (Noor and the others absolutely missed out.) Thank you for being you, for letting me be part of your life, and for bringing back my smile.</p>
           <p>I love you so much, my darling, and I am so incredibly proud of you. I hope that whenever you come back to this, no matter how much time has passed or what kind of day you're having, you remember that there is someone in this world who loves you so, so much and will always be cheering you on.</p>
-          <p>I love you to death, baby,<br>Zainab <3</p>
+          <p>I love you to death, baby,<br>Zainab &lt;3</p>
         </div>
       `,
       poster: `
         <h2>12 Reasons Why I Love You</h2>
-        <ul style="font-size: 1.5rem;">
-        <li>I love the way you care</li>
-        <li>I love the way you smile</li>
-        <li>I love the way you listen</li>
-        <li>I love your eyes</li>
-        <li>I love your unc mustache</li>
-        <li>I love how you love me</li>
-        <li>I love you make me feel chosen</li>
-        <li>I love your stupid jokes</li>
-        <li>I love how you nerd out</li>
-        <li>I love when you play guitar</li>
-        <li>I love your voice</li>
-        <li>I love how I can be myself with you</li>
+        <ul class="reasons-list">
+          <li>I love the way you care</li>
+          <li>I love the way you smile</li>
+          <li>I love the way you listen</li>
+          <li>I love your eyes</li>
+          <li>I love your unc mustache</li>
+          <li>I love how you love me</li>
+          <li>I love you make me feel chosen</li>
+          <li>I love your stupid jokes</li>
+          <li>I love how you nerd out</li>
+          <li>I love when you play guitar</li>
+          <li>I love your voice</li>
+          <li>I love how I can be myself with you</li>
         </ul>
-        <p>And even more! </p>
-        
+        <p>And even more! 💕</p>
       `,
       book: `
         <h2>Zainab Cheeseee 🧀</h2>
@@ -284,11 +349,10 @@
       const modalCard = document.getElementById('modalCard');
       const modalContent = document.getElementById('modalContent');
       
-      // Apply special stationary style if clicking the 
-      if (key === '') {
-        modalCard.classList.add('-style');
+      if (key === 'letter') {
+        modalCard.classList.add('letter-style');
       } else {
-        modalCard.classList.remove('-style');
+        modalCard.classList.remove('letter-style');
       }
 
       modalContent.innerHTML = contents[key];
