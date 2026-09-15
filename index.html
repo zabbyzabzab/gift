@@ -38,14 +38,13 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #12101d;
+      background-color: #fff5f8; /* Soft pink matching your letter paper background */
       z-index: 2000;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       transition: opacity 0.8s ease, visibility 0.8s ease;
-      color: #fce4ec;
       text-align: center;
       padding: 20px;
     }
@@ -58,8 +57,8 @@
 
     .question-title {
       font-size: 3.5rem;
-      color: #ffb6c1;
-      text-shadow: 0 4px 10px rgba(239, 130, 160, 0.4);
+      color: #b25d7e;
+      text-shadow: 0 2px 4px rgba(226, 168, 190, 0.4);
       margin-bottom: 40px;
     }
 
@@ -199,7 +198,7 @@
     #spot-poster { top: 21%; left: 2%; width: 11%; height: 26%; }
     #spot-letter { top: 42%; left: 39.5%; width: 13%; height: 13.5%; }
     #spot-book   { top: 72%; left: 6%;  width: 11%; height: 20%; }
-    #spot-photo  { top: 78%; left: 85%; width: 8%;  height: 15%; } /* Adjusted slightly down */
+    #spot-photo  { top: 78%; left: 85%; width: 8%;  height: 15%; }
 
     /* Pop-up Overlay (Modal) */
     .modal-overlay {
@@ -371,7 +370,7 @@
     const musicBtn = document.getElementById('musicBtn');
     let isPlaying = false;
 
-    // Changes NO button into YES when hovered
+    // Changes NO button into YES when hovered or tapped
     function turnToYes() {
       const noBtn = document.getElementById('noBtn');
       noBtn.innerHTML = 'YES! 💕';
