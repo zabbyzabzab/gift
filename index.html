@@ -38,7 +38,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #fff5f8; /* Soft pink matching your letter paper background */
+      background-color: #fff5f8;
       z-index: 2000;
       display: flex;
       flex-direction: column;
@@ -330,10 +330,10 @@
 
   <!-- "Do You Love Me?" Intro Screen -->
   <div class="intro-overlay" id="introOverlay">
-    <div class="question-title">Do you love me, Okashah? ❤️</div>
+    <div class="question-title">Do you love me? </div>
     <div class="btn-container">
-      <button class="love-btn" onclick="startExperience()">YES! 💕</button>
-      <button class="love-btn" id="noBtn" onmouseover="turnToYes()" onclick="startExperience()">NO 😜</button>
+      <button class="love-btn" onclick="startExperience()">Yes</button>
+      <button class="love-btn" id="noBtn" onmouseover="turnToYes()" onmouseleave="turnToNo()" onclick="startExperience()">No</button>
     </div>
   </div>
 
@@ -370,11 +370,18 @@
     const musicBtn = document.getElementById('musicBtn');
     let isPlaying = false;
 
-    // Changes NO button into YES when hovered or tapped
+    // Turn button to Yes on hover
     function turnToYes() {
       const noBtn = document.getElementById('noBtn');
-      noBtn.innerHTML = 'YES! 💕';
+      noBtn.innerHTML = 'Yes';
       noBtn.style.background = '#ffcbe1';
+    }
+
+    // Revert button back to NO when hover stops
+    function turnToNo() {
+      const noBtn = document.getElementById('noBtn');
+      noBtn.innerHTML = 'No';
+      noBtn.style.background = '#efb3b5';
     }
 
     function startExperience() {
